@@ -30,4 +30,3 @@ public class BossFloor extends TowerFloor {
         System.out.println("║         *** BOSS ENCOUNTER ***           ║");
         System.out.println("║  " + padRight(bossName + " awakens!", 40) + " ║");
         System.out.println("╚══════════════════════════════════════════╝");
-    }
