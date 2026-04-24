@@ -66,11 +66,16 @@ public class Hero {
         hp = Math.max(0, hp - actual);
     }
 
-    public void takeDamage(int amount) {
+    public void applyRawDamage(int amount) {
         hp = Math.max(0, hp - amount);
     }
 
     public void heal(int amount) {
         hp = Math.min(maxHp, hp + amount);
+    }
+
+    @Override
+    public String toString() {
+        return name + " [HP:" + hp + "/" + maxHp + " | " + state.getName() + "]";
     }
 }
