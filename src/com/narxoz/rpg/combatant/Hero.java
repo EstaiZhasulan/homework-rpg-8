@@ -1,11 +1,10 @@
 package com.narxoz.rpg.combatant;
 
-/**
- * Represents a player-controlled hero participating in the tower climb.
- *
- * Students: you may extend this class as needed for your implementation.
- * You will need to add a HeroState field and related methods.
- */
+import com.narxoz.rpg.state.HeroState;
+import com.narxoz.rpg.state.NormalState;
+
+
+
 public class Hero {
 
     private final String name;
@@ -13,6 +12,7 @@ public class Hero {
     private final int maxHp;
     private final int attackPower;
     private final int defense;
+    private HeroState state;
 
     public Hero(String name, int hp, int attackPower, int defense) {
         this.name = name;
@@ -20,15 +20,31 @@ public class Hero {
         this.maxHp = hp;
         this.attackPower = attackPower;
         this.defense = defense;
+        this.state = new NormalState();
     }
 
-    public String getName()        { return name; }
-    public int getHp()             { return hp; }
-    public int getMaxHp()          { return maxHp; }
-    public int getAttackPower()    { return attackPower; }
-    public int getDefense()        { return defense; }
-    public boolean isAlive()       { return hp > 0; }
+    public Hero(String name, int hp, int attackPower, int defense, HeroState initialState) {
+        this.name = name;
+        this.hp = hp;
+        this.maxHp = hp;
+        this.attackPower = attackPower;
+        this.defense = defense;
+        this.state = initialState;
+    }
 
+    public String getName()     { return name; }
+    public int getHp()          { return hp; }
+    public int getMaxHp()       { return maxHp; }
+    public int getAttackPower() { return attackPower; }
+    public int getDefense()     { return defense; }
+    public boolean isAlive()    { return hp > 0; }
+    public HeroState getState() { return state; }
+
+    public void setState(HeroState newState) {
+        System.out.println("[State] " + name + ": " + state.getName()
+                + " -> " + newState.getName());
+        this.state = newState;
+    }
     /**
      * Reduces this hero's HP by the given amount, clamped to zero.
      *
