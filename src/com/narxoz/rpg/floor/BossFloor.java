@@ -56,3 +56,22 @@ public class BossFloor extends TowerFloor {
                 System.out.println("  *** " + bossName + " enters PHASE 2! Enraging! ***");
             }
 
+            for (Hero h : party) {
+                if (!h.isAlive()) continue;
+                h.onTurnStart();
+
+                if (!h.canAct()) {
+                    h.onTurnEnd();
+                    continue;
+                }
+
+                int dmg = h.getEffectiveDamage();
+                boss.takeDamage(dmg);
+                System.out.println("  " + h.getName() + " hits " + bossName
+                        + " for " + dmg + ". (Boss HP: " + boss.getHp() + ")");
+                h.onTurnEnd();
+                if (!boss.isAlive()) break;
+            }
+
+            if (!boss.isAlive()) break;
+
