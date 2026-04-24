@@ -45,6 +45,23 @@ public class Hero {
                 + " -> " + newState.getName());
         this.state = newState;
     }
+
+    public int getEffectiveDamage() {
+        return state.modifyOutgoingDamage(attackPower);
+    }
+
+    public boolean canAct() {
+        return state.canAct();
+    }
+
+    public void onTurnStart() {
+        state.onTurnStart(this);
+    }
+
+    public void onTurnEnd() {
+        state.onTurnEnd(this);
+    }
+
     /**
      * Reduces this hero's HP by the given amount, clamped to zero.
      *
