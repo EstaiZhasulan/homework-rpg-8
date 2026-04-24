@@ -3,8 +3,6 @@ package com.narxoz.rpg.combatant;
 import com.narxoz.rpg.state.HeroState;
 import com.narxoz.rpg.state.NormalState;
 
-
-
 public class Hero {
 
     private final String name;
@@ -62,20 +60,16 @@ public class Hero {
         state.onTurnEnd(this);
     }
 
-    /**
-     * Reduces this hero's HP by the given amount, clamped to zero.
-     *
-     * @param amount the damage to apply; must be non-negative
-     */
+    public void takeDamage(int rawDamage) {
+        int modified = state.modifyIncomingDamage(rawDamage);
+        int actual = Math.max(1, modified - defense / 4);
+        hp = Math.max(0, hp - actual);
+    }
+
     public void takeDamage(int amount) {
         hp = Math.max(0, hp - amount);
     }
 
-    /**
-     * Restores this hero's HP by the given amount, clamped to maxHp.
-     *
-     * @param amount the HP to restore; must be non-negative
-     */
     public void heal(int amount) {
         hp = Math.min(maxHp, hp + amount);
     }
