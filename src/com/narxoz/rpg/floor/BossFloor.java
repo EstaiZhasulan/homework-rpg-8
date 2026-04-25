@@ -110,3 +110,47 @@ public class BossFloor extends TowerFloor {
                 }
             }
         }
+
+        boolean cleared = !boss.isAlive();
+        String summary = cleared
+                ? bossName + " has been slain after " + round + " rounds!"
+                : "The party fell before " + bossName + "...";
+        System.out.println("\n  [Result] " + summary);
+        return new FloorResult(cleared, totalDamage, summary);
+    }
+
+    @Override
+    protected void awardLoot(List<Hero> party, FloorResult result) {
+        System.out.println("[Loot] Boss drops legendary treasure! Full heal for all survivors!");
+        for (Hero h : party) {
+            if (h.isAlive()) {
+                h.heal(h.getMaxHp());
+                System.out.println("  " + h.getName() + " fully restored to " + h.getHp() + " HP!");
+            }
+        }
+    }
+
+
+    @Override
+    protected void cleanup(List<Hero> party) {
+        System.out.println("[Cleanup] " + bossName + "'s death shockwave dispels all status effects!");
+        for (Hero h : party) {
+            if (h.isAlive()) {
+                h.setState(new com.narxoz.rpg.state.NormalState());
+            }
+        }
+    }
+
+    private boolean anyAlive(List<Hero> party) {
+        return party.stream().anyMatch(Hero::isAlive);
+    }
+
+    private Hero firstAliveHero(List<Hero> party) {
+        return party.stream().filter(Hero::isAlive).findFirst().orElse(null);
+    }
+
+    private String padRight(String s, int n) {
+        return String.format("%-" + n + "s", s);
+    }
+}
+
