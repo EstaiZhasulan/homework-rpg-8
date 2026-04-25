@@ -87,4 +87,11 @@ public class BossFloor extends TowerFloor {
             System.out.println("  " + bossName + " strikes " + target.getName()
                     + " for " + actual + " dmg. HP: " + target.getHp());
 
-
+            if (phase2Announced && round % 2 == 0) {
+                for (Hero h : party) {
+                    if (h.isAlive() && !(h.getState() instanceof BerserkState)) {
+                        System.out.println("  " + bossName + "'s roar fills " + h.getName() + " with rage!");
+                        h.setState(new BerserkState(2));
+                    }
+                }
+            }
