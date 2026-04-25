@@ -38,3 +38,12 @@ public class CombatFloor extends TowerFloor {
         System.out.println("[Setup] Monsters appear: " + monsterNames());
         System.out.println("[Setup] Party: " + partyStatus(party));
     }
+
+    Override
+    protected FloorResult resolveChallenge(List<Hero> party) {
+        int totalDamage = 0;
+        int round = 0;
+
+        while (monstersAlive() && anyAlive(party)) {
+            round++;
+            System.out.println("\n  [Round " + round + "]");
