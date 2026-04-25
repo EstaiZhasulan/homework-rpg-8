@@ -95,3 +95,8 @@ public class BossFloor extends TowerFloor {
                     }
                 }
             }
+
+            if (round % 3 == 0 && target.isAlive()) {
+                System.out.println("  " + bossName + "'s shockwave stuns " + target.getName() + "!");
+                target.setState(new StunnedState());
+            }
