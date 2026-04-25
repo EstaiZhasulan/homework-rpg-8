@@ -75,3 +75,16 @@ public class BossFloor extends TowerFloor {
 
             if (!boss.isAlive()) break;
 
+
+            Hero target = firstAliveHero(party);
+            if (target == null) break;
+
+            int rawDmg = boss.getAttackPower();
+            int hpBefore = target.getHp();
+            target.takeDamage(rawDmg);
+            int actual = hpBefore - target.getHp();
+            totalDamage += actual;
+            System.out.println("  " + bossName + " strikes " + target.getName()
+                    + " for " + actual + " dmg. HP: " + target.getHp());
+
+
