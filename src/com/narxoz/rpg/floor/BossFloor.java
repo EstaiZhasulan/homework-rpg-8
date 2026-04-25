@@ -100,3 +100,13 @@ public class BossFloor extends TowerFloor {
                 System.out.println("  " + bossName + "'s shockwave stuns " + target.getName() + "!");
                 target.setState(new StunnedState());
             }
+
+            if (round % 4 == 0) {
+                for (Hero h : party) {
+                    if (h.isAlive() && !(h.getState() instanceof PoisonedState)) {
+                        System.out.println("  " + bossName + "'s venom splashes " + h.getName() + "!");
+                        h.setState(new PoisonedState(3, 2));
+                    }
+                }
+            }
+        }
