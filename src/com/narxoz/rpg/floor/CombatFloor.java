@@ -47,3 +47,24 @@ public class CombatFloor extends TowerFloor {
         while (monstersAlive() && anyAlive(party)) {
             round++;
             System.out.println("\n  [Round " + round + "]");
+            for (Hero hero : party) {
+                if (!hero.isAlive()) continue;
+                hero.onTurnStart();
+
+                if (!hero.canAct()) {
+                    hero.onTurnEnd();
+                    continue;
+                }
+
+                Monster target = firstAlive();
+                if (target == null) break;
+                int dmg = hero.getEffectiveDamage();
+                target.takeDamage(dmg);
+                System.out.println("  " + hero.getName() + " attacks " + target.getName()
+                        + " for " + dmg + " dmg. (Monster HP: " + target.getHp() + ")");
+                if (!target.isAlive()) {
+                    System.out.println("  " + target.getName() + " is defeated!");
+                }
+                hero.onTurnEnd();
+            }
+
