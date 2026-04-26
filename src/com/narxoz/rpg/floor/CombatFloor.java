@@ -93,4 +93,23 @@ public class CombatFloor extends TowerFloor {
                 }
             }
         }
+        boolean cleared = !monstersAlive();
+        String summary = cleared
+                ? "Party defeated all monsters in " + round + " rounds."
+                : "Party was defeated by the monsters!";
+        System.out.println("  [Result] " + summary);
+        return new FloorResult(cleared, totalDamage, summary);
+    }
+
+    @Override
+    protected void awardLoot(List<Hero> party, FloorResult result) {
+        System.out.println("[Loot] Victory reward: each hero heals 10 HP.");
+        for (Hero h : party) {
+            if (h.isAlive()) {
+                h.heal(10);
+                System.out.println("  " + h.getName() + " healed to " + h.getHp() + " HP.");
+            }
+        }
+    }
+
 
