@@ -111,5 +111,32 @@ public class CombatFloor extends TowerFloor {
             }
         }
     }
+    private boolean monstersAlive() {
+        return monsters.stream().anyMatch(Monster::isAlive);
+    }
 
+    private boolean anyAlive(List<Hero> party) {
+        return party.stream().anyMatch(Hero::isAlive);
+    }
+
+    private Monster firstAlive() {
+        return monsters.stream().filter(Monster::isAlive).findFirst().orElse(null);
+    }
+
+    private Hero firstAliveHero(List<Hero> party) {
+        return party.stream().filter(Hero::isAlive).findFirst().orElse(null);
+    }
+
+    private String monsterNames() {
+        StringBuilder sb = new StringBuilder();
+        for (Monster m : monsters) sb.append(m.getName()).append("(HP:").append(m.getHp()).append(") ");
+        return sb.toString().trim();
+    }
+
+    private String partyStatus(List<Hero> party) {
+        StringBuilder sb = new StringBuilder();
+        for (Hero h : party) sb.append(h.toString()).append("  ");
+        return sb.toString().trim();
+    }
+}
 
