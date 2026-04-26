@@ -81,4 +81,16 @@ public class CombatFloor extends TowerFloor {
                 System.out.println("  " + m.getName() + " attacks " + target.getName()
                         + " for " + actual + " dmg. (Hero HP: " + target.getHp() + ")");
 
+                if (m.getName().contains("Cursed") && target.isAlive()
+                        && !(target.getState() instanceof PoisonedState)) {
+                    System.out.println("  " + m.getName() + " curses " + target.getName() + "! [Poisoned 3t]");
+                    target.setState(new PoisonedState(4, 3));
+                }
+                if (m.getName().contains("Stone") && target.isAlive()
+                        && !(target.getState() instanceof StunnedState)) {
+                    System.out.println("  " + m.getName() + " petrifies " + target.getName() + "! [Stunned]");
+                    target.setState(new StunnedState());
+                }
+            }
+        }
 
