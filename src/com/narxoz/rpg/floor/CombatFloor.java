@@ -68,3 +68,17 @@ public class CombatFloor extends TowerFloor {
                 hero.onTurnEnd();
             }
 
+            for (Monster m : monsters) {
+                if (!m.isAlive()) continue;
+                Hero target = firstAliveHero(party);
+                if (target == null) break;
+
+                int rawDmg = m.getAttackPower();
+                int hpBefore = target.getHp();
+                target.takeDamage(rawDmg);
+                int actual = hpBefore - target.getHp();
+                totalDamage += actual;
+                System.out.println("  " + m.getName() + " attacks " + target.getName()
+                        + " for " + actual + " dmg. (Hero HP: " + target.getHp() + ")");
+
+
